@@ -39,7 +39,7 @@ jobs:
       if: always()      
       with:
         files: |
-          src/UnitTestProject/*.trx
+          src/UnitTestProject/TestResults/*.trx
           # test-results/**/*.xml
           # test-results/**/*.trx
           # test-results/**/*.json
