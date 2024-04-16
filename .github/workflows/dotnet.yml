@@ -31,15 +31,15 @@ jobs:
       run: dotnet build --no-restore
 
     - name: MS Test
-      run: dotnet test --no-build --verbosity normal
-      working-directory: src/UnitTestProject
+      run: dotnet test UnitTestProject/NunitTestProject.csproj -l:trx;LogFileName=TestOutput.xml --no-build --verbosity normal
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
         files: |
-          test-results/**/*.xml
-          test-results/**/*.trx
-          test-results/**/*.json
+          *.trx
+          # test-results/**/*.xml
+          # test-results/**/*.trx
+          # test-results/**/*.json
   
