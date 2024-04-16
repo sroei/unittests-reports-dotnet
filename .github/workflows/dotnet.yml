@@ -21,8 +21,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore ${{env.SOLUTION_FILE_PATH}}
+      run: dotnet restore
+      working-directory: src
     - name: Build
-      run: dotnet build ${{env.SOLUTION_FILE_PATH}} --no-restore
+      run: dotnet build --no-restore
+      working-directory: src
     - name: Test
       run: dotnet test **/*TestProject.csproj --no-build --verbosity normal
