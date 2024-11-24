@@ -22,6 +22,7 @@ env:
   buildConfiguration: 'Release'
   buildPlatform: 'any cpu'
   solutionName: 'GithubActionTestsResult'
+  sourceDirectory: ${{ github.workspace }}/src
   #
   # Publish settings
   nugetApiKey: ${{ secrets.NUGET_PUBLIC_KEY }}
@@ -61,7 +62,10 @@ jobs:
     runs-on: windows-latest
     needs: new-version
     if: ${{ needs.new-version.result == 'success' && needs.new-version.outputs.validVersion == 'True' }}
-    
+    defaults:
+      run:
+        working-directory: ${{ env.sourceDirectory }}
+        
     env:
       buildVersion: ${{ needs.new-version.outputs.buildVersion }}
     
@@ -82,7 +86,7 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 
     - name: Restore NuGet Packages
-      run: nuget restore ./src/${{ env.solutionName }}.sln
+      run: nuget restore ${{ env.solutionName }}.sln
 
     - name: Build .NET Framework Solution
       shell: pwsh
