@@ -57,7 +57,7 @@ jobs:
         $version = "${{ steps.parse-version.outputs.version }}"
         echo "valid=$($version -match '^\d+(\.\d+){3}$')" >> $env:GITHUB_OUTPUT
 
-  build:
+  new-build:
     name: Build & Publish Version ${{ needs.new-version.outputs.buildVersion }}
     runs-on: windows-latest
     needs: new-version
@@ -92,36 +92,33 @@ jobs:
       shell: pwsh
       run: msbuild "${{ env.solutionName }}.sln" /t:Build /p:Configuration=${{ env.buildConfiguration }} /p:OutputPath="${{ env.binariesDirectory }}/build/"
 
-  test:
+  invoke-unit-tests:
+    name: Invoke Unit Tests & Artifact Results
     runs-on: ubuntu-latest
-    needs: build
-    if: ${{ needs.build.result == 'success' }}
+    if: ${{ needs.new-build.result == 'success' }}
+    needs: 
+      - new-build
+      - new-version
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
 
-    steps:
-    - uses: actions/checkout@v4
+    env:
+      buildVersion: ${{ needs.new-version.outputs.buildVersion }}
+      projectName: 'UnitTestProject'
+      projectType: 'csproj'
     
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Restore Dependencies
-      run: dotnet restore
-      
-    - name: Build
-      run: dotnet build --no-restore
+      - name: List files in the repository
+        run: ls -R
 
-    - name: MS Test
-      run: dotnet test -l:trx;LogFileName=TestOutput.xml --no-build --verbosity normal
-      working-directory: src/UnitTestProject
-
-    # - name: Publish Test Results
-    #   uses: EnricoMi/publish-unit-test-result-action@v2
-    #   if: always()      
-    #   with:
-    #     files: |
-    #       src/UnitTestProject/TestResults/*.trx
-    #       # test-results/**/*.xml
-    #       # test-results/**/*.trx
-    #       # test-results/**/*.json
-  
+      - name: Invoke Unit Tests
+        uses: g4-api/g4-github-actions/actions/test-dotnet-project@v1
+        if: steps.test-settings.outcome == 'success'
+        with:
+          build-version: ${{ env.buildVersion }}
+          project-name: ${{ env.projectName }}
+          project-type: ${{ env.projectType }}
