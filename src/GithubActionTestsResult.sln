@@ -9,6 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NunitTestProject", "NunitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XunitTestProject", "XunitTestProject\XunitTestProject.csproj", "{CF53BE60-8264-4314-9534-E036BA9DF79B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{59E96A20-221F-432C-AEA5-C9CE422981A0}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\dotnet.yml = ..\.github\workflows\dotnet.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsConsoleApp", "WindowsConsoleApp\WindowsConsoleApp.csproj", "{7746CFD8-30E5-4ACC-B1DA-E203FCCCB766}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +34,10 @@ Global
 		{CF53BE60-8264-4314-9534-E036BA9DF79B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF53BE60-8264-4314-9534-E036BA9DF79B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF53BE60-8264-4314-9534-E036BA9DF79B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7746CFD8-30E5-4ACC-B1DA-E203FCCCB766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7746CFD8-30E5-4ACC-B1DA-E203FCCCB766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7746CFD8-30E5-4ACC-B1DA-E203FCCCB766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7746CFD8-30E5-4ACC-B1DA-E203FCCCB766}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
