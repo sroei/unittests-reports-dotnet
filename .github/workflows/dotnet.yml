@@ -95,7 +95,6 @@ jobs:
   invoke-unit-tests:
     name: Invoke Unit Tests & Artifact Results
     runs-on: ubuntu-latest
-    if: ${{ needs.new-build.result == 'success' }}
     needs: 
       - new-build
       - new-version
