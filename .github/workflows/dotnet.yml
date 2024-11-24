@@ -82,7 +82,7 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 
     - name: Restore NuGet Packages
-      run: nuget restore ${{ env.solutionName }}.sln
+      run: nuget restore ./src/${{ env.solutionName }}.sln
 
     - name: Build .NET Framework Solution
       shell: pwsh
