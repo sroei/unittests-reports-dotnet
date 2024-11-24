@@ -95,6 +95,7 @@ jobs:
   invoke-unit-tests:
     name: Invoke Unit Tests & Artifact Results
     runs-on: ubuntu-latest
+    if: ${{ needs.new-build.result == 'success' }}
     needs: 
       - new-build
       - new-version
@@ -113,6 +114,12 @@ jobs:
 
       - name: List files in the repository
         run: ls -R
+
+      - name: Set Test Settings
+        id: test-settings
+        shell: pwsh
+        run: |
+          Write-Host "Test Settings"
 
       - name: Invoke Unit Tests
         uses: g4-api/g4-github-actions/actions/test-dotnet-project@v1
