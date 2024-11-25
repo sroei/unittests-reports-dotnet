@@ -138,7 +138,7 @@ jobs:
   publish-test-results:
     name: Publish Test Results
     runs-on: ubuntu-latest
-    if: ${{ needs.invoke-unit-tests.result == 'success' }}
+    if: always()
     needs: invoke-unit-tests
     defaults:
       run:
@@ -147,6 +147,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: List Downloadable Artifacts
+        run: gh api -X GET /repos/${{ github.repository }}/actions/artifacts
 
       - name: Download Test Results Artifact
         uses: actions/download-artifact@v4
