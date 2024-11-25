@@ -144,13 +144,13 @@ jobs:
         shell: pwsh
         working-directory: ${{ steps.set-working-directory.outputs.working-directory }}
         run: |
-          $projectFileName      = "${{ inputs.project-name }}.${{ inputs.project-type }}"
+          $projectFileName      = "${{ env.projectName }}.${{ env.projectType }}"
           $projectFile          = (Get-ChildItem -Path . -Filter $projectFileName -Recurse).FullName
           $runSettingsFileName  = "${{ inputs.test-settings }}"
           $runSettingsFile      = (Get-ChildItem -Path . -Filter $runSettingsFileName -Recurse).FullName
           $testDirectory        = [System.IO.Path]::GetDirectoryName($projectFile)
           $testFilterExpression = "${{ inputs.filter }}"
-          $testReportFile       = "${{ env.artifactStagingDirectory }}/TestOutput.${{ inputs.project-name }}.${{ inputs.build-version }}.xml"
+          $testReportFile       = "${{ env.artifactStagingDirectory }}/TestOutput.${{ env.projectName }}.000.xml"
       
           Write-Host "Project File Name             : $projectFileName"
           Write-Host "Project File                  : $projectFile"
