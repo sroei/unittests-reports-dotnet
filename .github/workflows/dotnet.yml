@@ -94,7 +94,7 @@ jobs:
 
   invoke-unit-tests:
     name: Invoke Unit Tests & Artifact Results
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     if: ${{ needs.new-build.result == 'success' }}
     needs: 
       - new-build
@@ -124,7 +124,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ inputs.dotnet-version }}
+          dotnet-version: "8"
       
       - name: Set Working Directory
         id: set-working-directory
