@@ -129,6 +129,12 @@ jobs:
           project-name: ${{ env.projectName }}
           project-type: ${{ env.projectType }}
 
+      - name: Upload Unit Tests Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-results
+          path: ${{ env.artifactStagingDirectory }}/TestOutput.${{ env.projectName }}.${{ env.buildVersion }}.xml
+
   publish-test-results:
     name: Publish Test Results
     runs-on: ubuntu-latest
@@ -145,7 +151,7 @@ jobs:
       - name: Download Test Results Artifact
         uses: actions/download-artifact@v3
         with:
-          name: test-results
+          name: unit-test-results
           path: ${{ env.artifactStagingDirectory }}
 
       - name: Publish Test Results
